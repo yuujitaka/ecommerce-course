@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 
 //https://blog.logrocket.com/how-to-use-svgs-in-react/
 import { ReactComponent as Logo } from '../../assets/images/crown.svg';
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
 import './header.styles.scss';
 
-const Header = ({currentUser}) => {
+const Header = ({ currentUser, hiddenCart }) => {
   return (
   <div className='header'>
     <Link className='logo-container' to='/'>
@@ -31,15 +33,20 @@ const Header = ({currentUser}) => {
         <Link className='option' to='/signin'>SIGN IN</Link>
       }
 
+      <CartIcon />
+
     </div>
 
+      { 
+        !hiddenCart && <CartDropdown />
+      }
+    
   </div>
 )};
 
 const mapStateToProps = state => ({
-    currentUser: state.user.currentUser
-
-
+    currentUser: state.user.currentUser,
+    hiddenCart: state.cart.hidden
 });
 
 export default connect(mapStateToProps)(Header);
